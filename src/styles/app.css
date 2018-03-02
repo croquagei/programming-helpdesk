@@ -1,0 +1,9 @@
+.app {
+  text-align: center;
+  min-height: 100vh;
+}
+
+.invert {
+  background-color: #222;
+  color: white;
+}
