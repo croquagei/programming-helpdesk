@@ -15,7 +15,6 @@ const tryConnection = () =>
     () => {
       client.end();
       if (!startedElectron) {
-        console.log('starting electron');
         startedElectron = true;
         const exec = require('child_process').exec; // eslint-disable-line
         exec('npm run electron');

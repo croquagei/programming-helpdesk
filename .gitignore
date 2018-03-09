@@ -12,6 +12,9 @@
 # electron build
 /release-builds
 
+# test records in SQlite db
+request_log.db
+
 # misc
 .DS_Store
 .env.local

@@ -1,12 +1,89 @@
 const { app, BrowserWindow, ipcMain } = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path');
 const url = require('url');
+const sqlite3 = require('sqlite3').verbose();
 
 let mainWindow;
 
-ipcMain.on('testMessage', (e, args) => {
-  console.log(args);
-  e.sender.send('testResponse', 'coming in loud and clear, harry potter');
+ipcMain.on('addNewRequest', (e, args) => {
+  const request = JSON.parse(args);
+  const db = new sqlite3.Database('./request_log.db');
+  const createQuery =
+    'CREATE TABLE IF NOT EXISTS REQUEST (desc TEXT, unit TEXT, timeRequested INTEGER, timeClosed INTEGER)';
+  const insertQuery = `INSERT INTO REQUEST VALUES("${request.desc}", "${
+    request.unit
+  }", strftime('%s','now'), NULL)`;
+  const lastInsertIdQuery = 'SELECT last_insert_rowid() as id';
+  db.serialize(() => {
+    db.run(createQuery, err => {
+      if (err) {
+        e.sender.send(
+          'errorResponse',
+          JSON.stringify({ origin: 'electron create table query', err }),
+        );
+      }
+    });
+    db.run(insertQuery, err => {
+      if (err) {
+        e.sender.send(
+          'errorResponse',
+          JSON.stringify({ origin: 'electron insert query', err }),
+        );
+      }
+    });
+    db.get(lastInsertIdQuery, (err, row) => {
+      if (err) {
+        e.sender.send(
+          'errorResponse',
+          JSON.stringify({
+            origin: 'electron select last insert id query',
+            err,
+          }),
+        );
+      } else {
+        const response = Object.assign({ id: row.id }, request);
+        e.sender.send('getAllRequestsResponse', JSON.stringify({ response }));
+      }
+    });
+  });
+  db.close();
+});
+
+ipcMain.on('closeRequest', (e, args) => {
+  const request = JSON.parse(args);
+  const db = new sqlite3.Database('./request_log.db');
+  const updateQuery = `UPDATE REQUEST SET timeClosed = strftime('%s','now') WHERE rowid = ${
+    request.id
+  }`;
+  db.run(updateQuery, err => {
+    if (err) {
+      e.sender.send(
+        'errorResponse',
+        JSON.stringify({ origin: 'electron update timeClosed query', err }),
+      );
+    }
+  });
+  db.close();
+});
+
+ipcMain.on('getAllRequests', e => {
+  const db = new sqlite3.Database('./request_log.db');
+  const selectAllQuery =
+    'SELECT rowid AS id, desc, unit, timeRequested, timeClosed FROM REQUEST';
+  db.all(selectAllQuery, (err, rows) => {
+    if (err) {
+      e.sender.send(
+        'errorResponse',
+        JSON.stringify({
+          origin: 'electron select all requests query',
+          err,
+        }),
+      );
+    } else {
+      e.sender.send('getAllRequestsResponse', JSON.stringify({ rows }));
+    }
+  });
+  db.close();
 });
 
 const createWindow = () => {
