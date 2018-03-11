@@ -1,7 +1,52 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+.app {
+  text-align: center;
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 100px 1fr 100px;
+  grid-template-rows: 80px 80px 1fr 80px;
+  grid-template-areas:
+    "header header header"
+    ". tutors ."
+    ". main ."
+    ". footer .";
 }
 
-@import './app.css';
+header {
+  grid-area: header;
+  align-self: center;
+}
+
+.available-tutors {
+  grid-area: tutors;
+}
+
+main {
+  overflow: auto;
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+  align-self: center;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.help-btn {
+  white-space: pre;
+}
+
+
+.help-btn:before {
+  content: '\1F64B       ';
+}
+
+.help-btn:after {
+  content: '       \1F64B';
+}
+
+div.menu.transition.visible {
+  max-height: 500px !important; /* displays full list of unit options on help request modal */
+}

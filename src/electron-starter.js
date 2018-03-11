@@ -8,11 +8,12 @@ let mainWindow;
 ipcMain.on('addNewRequest', (e, args) => {
   const request = JSON.parse(args);
   const db = new sqlite3.Database('./request_log.db');
-  const createQuery =
-    'CREATE TABLE IF NOT EXISTS REQUEST (desc TEXT, unit TEXT, timeRequested INTEGER, timeClosed INTEGER)';
-  const insertQuery = `INSERT INTO REQUEST VALUES("${request.desc}", "${
-    request.unit
-  }", strftime('%s','now'), NULL)`;
+  const createQuery = `CREATE TABLE IF NOT EXISTS REQUEST 
+                        (desc TEXT, unit TEXT, 
+                        timeRequested INTEGER, timeClosed INTEGER)`;
+  const insertQuery = `INSERT INTO REQUEST 
+                        VALUES("${request.desc}", "${request.unit}", 
+                        strftime('%s','now'), NULL)`;
   const lastInsertIdQuery = 'SELECT last_insert_rowid() as id';
   db.serialize(() => {
     db.run(createQuery, err => {
@@ -42,7 +43,7 @@ ipcMain.on('addNewRequest', (e, args) => {
         );
       } else {
         const response = Object.assign({ id: row.id }, request);
-        e.sender.send('getAllRequestsResponse', JSON.stringify({ response }));
+        e.sender.send('addNewRequestResponse', JSON.stringify({ response }));
       }
     });
   });
@@ -52,9 +53,9 @@ ipcMain.on('addNewRequest', (e, args) => {
 ipcMain.on('closeRequest', (e, args) => {
   const request = JSON.parse(args);
   const db = new sqlite3.Database('./request_log.db');
-  const updateQuery = `UPDATE REQUEST SET timeClosed = strftime('%s','now') WHERE rowid = ${
-    request.id
-  }`;
+  const updateQuery = `UPDATE REQUEST 
+                        SET timeClosed = strftime('%s','now') 
+                        WHERE rowid = ${request.id}`;
   db.run(updateQuery, err => {
     if (err) {
       e.sender.send(
@@ -68,8 +69,8 @@ ipcMain.on('closeRequest', (e, args) => {
 
 ipcMain.on('getAllRequests', e => {
   const db = new sqlite3.Database('./request_log.db');
-  const selectAllQuery =
-    'SELECT rowid AS id, desc, unit, timeRequested, timeClosed FROM REQUEST';
+  const selectAllQuery = `SELECT rowid AS id, desc, unit, timeRequested, timeClosed 
+                          FROM REQUEST`;
   db.all(selectAllQuery, (err, rows) => {
     if (err) {
       e.sender.send(
@@ -97,7 +98,7 @@ const createWindow = () => {
     });
   mainWindow.loadURL(startUrl);
   mainWindow.webContents.openDevTools();
-  // mainWindow.setFullScreen(true);
+  mainWindow.setFullScreen(true);
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -119,6 +120,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
