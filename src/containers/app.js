@@ -88,10 +88,12 @@ class App extends Component {
   }
 
   handleFormInput(e, data) {
-    const { request } = this.state;
+    const { request, showErrorMessage } = this.state;
     request[data.id] = data.value;
     this.setState({ request });
-    this.clearErrorMessage();
+    if (showErrorMessage) {
+      this.clearErrorMessage();
+    }
   }
 
   clearErrorMessage() {
