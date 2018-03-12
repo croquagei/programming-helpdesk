@@ -26,7 +26,7 @@ const RequestTable = props => {
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Unit</Table.HeaderCell>
             <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Resolve</Table.HeaderCell>
+            <Table.HeaderCell>Remove</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         {requests.length > 0 ? (
