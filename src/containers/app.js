@@ -127,11 +127,14 @@ class App extends Component {
   }
 
   triggerAnimation() {
-    const { animateButton } = this.state;
-    const animations = ['jiggle', 'shake', 'pulse', 'tada', 'bounce'];
-    const randomNumber = Math.floor(Math.random() * animations.length);
-    const animation = animations[randomNumber];
-    this.setState({ animateButton: !animateButton, animation });
+    const { showHelpModal } = this.state;
+    if (!showHelpModal) {
+      const { animateButton } = this.state;
+      const animations = ['jiggle', 'shake', 'pulse', 'tada', 'bounce'];
+      const randomNumber = Math.floor(Math.random() * animations.length);
+      const animation = animations[randomNumber];
+      this.setState({ animateButton: !animateButton, animation });
+    }
     setTimeout(this.triggerAnimation, 10000);
   }
 
