@@ -149,6 +149,7 @@ class App extends Component {
             request={request}
             handleFormInput={this.handleFormInput}
             handleFormSubmit={this.handleFormSubmit}
+            closeHelpModal={this.closeHelpModal}
             showErrorMessage={showErrorMessage}
             errorMessageHeader={errorMessageHeader}
             errorMessageContent={errorMessageContent}

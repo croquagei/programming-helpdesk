@@ -84,6 +84,10 @@ const RequestForm = props => {
         <Icon name="checkmark" />
         Submit
       </Button>
+      <Button color="red" floated="right" onClick={props.closeHelpModal}>
+        <Icon name="close" />
+        Cancel
+      </Button>
       <br />
       <Listeners onKeyPress={handleKeyPress} />
       <br />
@@ -97,6 +101,7 @@ RequestForm.propTypes = {
   showErrorMessage: PropTypes.bool.isRequired,
   errorMessageHeader: PropTypes.string.isRequired,
   errorMessageContent: PropTypes.string.isRequired,
+  closeHelpModal: PropTypes.func.isRequired,
 };
 
 export default RequestForm;
