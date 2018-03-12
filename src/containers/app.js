@@ -114,6 +114,7 @@ class App extends Component {
   }
 
   openHelpModal() {
+    this.clearRequestForm();
     this.setState({ showHelpModal: true });
   }
 
