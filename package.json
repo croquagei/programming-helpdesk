@@ -24,9 +24,9 @@
     "electron": "electron .",
     "dev": "BROWSER=none nf start",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/helpdesk.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . programming-helpdesk --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/images/react.icns --prune=true --out=release-builds --version-string.CompanyName=Swin --version-string.FileDescription=Swin --version-string.ProductName=\"Programming Helpdesk\"",
-    "package-linux": "electron-packager . programming-helpdesk --overwrite --asar=true --platform=linux --arch=x64 --icon=src/images/react.icns --prune=true --out=release-builds",
-    "package-all": "electron-packager ./ --all"
+    "package-win": "electron-packager ./ programming-helpdesk --overwrite --asar --out=./release-builds --platform=win32 --arch=x64 --prune=true --version-string.FileDescription=swin --version-string.ProductName=\"Programming Helpdesk\" --version-string.CompanyName=swin",
+    "package-linux": "electron-packager . programming-helpdesk --overwrite --asar=true --platform=linux --arch=x64 --icon=src/images/helpdesk.icns --prune=true --out=release-builds",
+    "package-all": "electron-packager ./ --all --out=release-builds"
   },
   "devDependencies": {
     "electron": "^1.8.2",
