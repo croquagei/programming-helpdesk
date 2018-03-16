@@ -176,7 +176,7 @@ class App extends Component {
     return (
       <div className="app">
         <header>
-          <h1>Programming Helpdesk</h1>
+          <h1>Welcome to the Programming Helpdesk</h1>
         </header>
         <div className="available-tutors">
           <AvailableTutors />

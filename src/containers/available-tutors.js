@@ -52,9 +52,12 @@ class AvailableTutors extends Component {
   render() {
     const { tutors } = this.state;
     return (
-      <Button.Group widths={tutors.length}>
-        {tutors.map((tutor, i) => this.renderButton(tutor, i))}
-      </Button.Group>
+      <div>
+        <h2>Tutors currently in the room</h2>
+        <Button.Group widths={tutors.length}>
+          {tutors.map((tutor, i) => this.renderButton(tutor, i))}
+        </Button.Group>
+      </div>
     );
   }
 }
