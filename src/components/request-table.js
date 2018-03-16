@@ -3,11 +3,21 @@ import { Table, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 const RequestTable = props => {
+  const timeSince = time => {
+    const now = new Date();
+    const then = new Date(time);
+    const difference = now.getTime() - then.getTime();
+    const mins = new Date(difference).getMinutes();
+    const phrasing = mins === 1 ? 'min' : 'mins';
+    const msg = mins > 0 ? `${mins} ${phrasing} ago` : 'just now';
+    return msg;
+  };
   const renderRow = request => (
     <Table.Row key={request.id}>
       <Table.Cell>{request.name}</Table.Cell>
       <Table.Cell>{request.unit}</Table.Cell>
       <Table.Cell>{request.desc}</Table.Cell>
+      <Table.Cell>{timeSince(request.timeRequested)}</Table.Cell>
       <Table.Cell
         className="clickable"
         onClick={() => props.closeRequest(request.id)} // eslint-disable-line react/prop-types
@@ -26,6 +36,7 @@ const RequestTable = props => {
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Unit</Table.HeaderCell>
             <Table.HeaderCell>Description</Table.HeaderCell>
+            <Table.HeaderCell>Time</Table.HeaderCell>
             <Table.HeaderCell>Remove</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -34,7 +45,7 @@ const RequestTable = props => {
         ) : (
           <Table.Footer fullWidth>
             <Table.Row>
-              <Table.HeaderCell colSpan="4">
+              <Table.HeaderCell colSpan="5">
                 No active help requests
               </Table.HeaderCell>
             </Table.Row>
