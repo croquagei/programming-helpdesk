@@ -34,7 +34,12 @@ class App extends Component {
   componentDidMount() {
     ipcRenderer.on('addNewRequestResponse', (e, args) => {
       const json = JSON.parse(args);
-      this.addRequest(json.response);
+      console.log(json); // eslint-disable-line no-console
+      this.addRequest(json.doc);
+    });
+    ipcRenderer.on('closeRequestResponse', (e, args) => {
+      const json = JSON.parse(args);
+      console.log(json); // eslint-disable-line no-console
     });
     ipcRenderer.on('getAllRequestsResponse', (e, args) => {
       console.log(args); // eslint-disable-line no-console

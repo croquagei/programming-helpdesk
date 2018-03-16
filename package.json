@@ -1,16 +1,18 @@
 {
   "name": "programming-helpdesk",
+  "description": "helpdesk application",
+  "author": "Jon Meyers",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "eslint-config-airbnb": "^16.1.0",
+    "pouchdb": "^6.4.3",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "semantic-ui-css": "2.2.12",
-    "semantic-ui-react": "0.78.2",
-    "sqlite3": "^3.1.13"
+    "semantic-ui-react": "0.78.2"
   },
   "main": "src/electron-starter.js",
   "homepage": "./",
@@ -24,12 +26,12 @@
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/helpdesk.icns --prune=true --out=release-builds",
     "package-win": "electron-packager . programming-helpdesk --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/images/react.icns --prune=true --out=release-builds --version-string.CompanyName=Swin --version-string.FileDescription=Swin --version-string.ProductName=\"Programming Helpdesk\"",
     "package-linux": "electron-packager . programming-helpdesk --overwrite --asar=true --platform=linux --arch=x64 --icon=src/images/react.icns --prune=true --out=release-builds",
-    "postinstall": "install-app-deps"
+    "package-all": "electron-packager ./ --all"
   },
   "devDependencies": {
     "electron": "^1.8.2",
-    "electron-builder": "^20.4.0",
     "electron-packager": "^11.0.1",
+    "electron-rebuild": "^1.7.3",
     "foreman": "^2.0.0"
   }
 }

@@ -9,11 +9,11 @@
 # production
 /build
 
-# electron build
+# electron builds
 /release-builds
 
-# test records in SQlite db
-request_log.db
+# test records in PouchDB
+/request_log
 
 # misc
 .DS_Store

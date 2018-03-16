@@ -1,90 +1,45 @@
 const { app, BrowserWindow, ipcMain } = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path');
 const url = require('url');
-const sqlite3 = require('sqlite3').verbose();
+const PouchDB = require('pouchdb');
 
 let mainWindow;
 
 ipcMain.on('addNewRequest', (e, args) => {
   const request = JSON.parse(args);
-  const db = new sqlite3.Database('./request_log.db');
-  const createQuery = `CREATE TABLE IF NOT EXISTS REQUEST 
-                        (desc TEXT, unit TEXT, 
-                        timeRequested INTEGER, timeClosed INTEGER)`;
-  const insertQuery = `INSERT INTO REQUEST 
-                        VALUES("${request.desc}", "${request.unit}", 
-                        strftime('%s','now'), NULL)`;
-  const lastInsertIdQuery = 'SELECT last_insert_rowid() as id';
-  db.serialize(() => {
-    db.run(createQuery, err => {
-      if (err) {
-        e.sender.send(
-          'errorResponse',
-          JSON.stringify({ origin: 'electron create table query', err }),
-        );
-      }
-    });
-    db.run(insertQuery, err => {
-      if (err) {
-        e.sender.send(
-          'errorResponse',
-          JSON.stringify({ origin: 'electron insert query', err }),
-        );
-      }
-    });
-    db.get(lastInsertIdQuery, (err, row) => {
-      if (err) {
-        e.sender.send(
-          'errorResponse',
-          JSON.stringify({
-            origin: 'electron select last insert id query',
-            err,
-          }),
-        );
-      } else {
-        const response = Object.assign({ id: row.id }, request);
-        e.sender.send('addNewRequestResponse', JSON.stringify({ response }));
-      }
-    });
-  });
-  db.close();
+  const db = new PouchDB('request_log');
+  const now = new Date();
+  const doc = Object.assign({ timeRequested: now }, request);
+  db
+    .post(doc)
+    .then(response => {
+      doc.id = response.id;
+      e.sender.send('addNewRequestResponse', JSON.stringify({ doc }));
+    })
+    .catch(error => console.log(error)); // eslint-disable-line no-console
 });
 
 ipcMain.on('closeRequest', (e, args) => {
   const request = JSON.parse(args);
-  const db = new sqlite3.Database('./request_log.db');
-  const updateQuery = `UPDATE REQUEST 
-                        SET timeClosed = strftime('%s','now') 
-                        WHERE rowid = ${request.id}`;
-  db.run(updateQuery, err => {
-    if (err) {
-      e.sender.send(
-        'errorResponse',
-        JSON.stringify({ origin: 'electron update timeClosed query', err }),
-      );
-    }
-  });
-  db.close();
+  const db = new PouchDB('request_log');
+  db
+    .get(request.id)
+    .then(doc => {
+      const updatedDoc = Object.assign({ timeClosed: new Date() }, doc);
+      e.sender.send('closeRequestResponse', JSON.stringify({ updatedDoc }));
+      return db.put(updatedDoc);
+    })
+    .catch(error => console.log(error)); // eslint-disable-line no-console
 });
 
 ipcMain.on('getAllRequests', e => {
-  const db = new sqlite3.Database('./request_log.db');
-  const selectAllQuery = `SELECT rowid AS id, desc, unit, timeRequested, timeClosed 
-                          FROM REQUEST`;
-  db.all(selectAllQuery, (err, rows) => {
-    if (err) {
-      e.sender.send(
-        'errorResponse',
-        JSON.stringify({
-          origin: 'electron select all requests query',
-          err,
-        }),
-      );
-    } else {
-      e.sender.send('getAllRequestsResponse', JSON.stringify({ rows }));
-    }
-  });
-  db.close();
+  const db = new PouchDB('request_log');
+  db
+    .getAll()
+    .then(docs => {
+      e.sender.send('getAllRequestsResponse', JSON.stringify({ docs }));
+    })
+    .catch(error => console.log(error)); // eslint-disable-line no-console
 });
 
 const createWindow = () => {
