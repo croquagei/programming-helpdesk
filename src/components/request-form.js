@@ -1,5 +1,13 @@
 import React from 'react';
-import { Button, Input, Dropdown, Icon, Message } from 'semantic-ui-react';
+import {
+  Button,
+  Input,
+  Dropdown,
+  Icon,
+  Message,
+  TextArea,
+  Form,
+} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Listeners from './listeners';
 
@@ -37,39 +45,34 @@ const RequestForm = props => {
   ];
   return (
     <div>
-      <Input
-        type="text"
-        id="name"
-        placeholder="name"
-        onChange={props.handleFormInput}
-        fluid
-        iconPosition="left"
-      >
-        <Icon name="user" />
-        <input autoFocus />
-      </Input>
-      <br />
-      <Dropdown
-        id="unit"
-        onChange={props.handleFormInput}
-        placeholder="unit"
-        fluid
-        search
-        selection
-        options={units}
-      />
-      <br />
-      <Input
-        type="text"
-        id="desc"
-        placeholder="desc"
-        onChange={props.handleFormInput}
-        fluid
-        iconPosition="left"
-      >
-        <Icon name="talk" />
-        <input />
-      </Input>
+      <Form>
+        <Input
+          type="text"
+          id="name"
+          placeholder="what is your name?"
+          onChange={props.handleFormInput}
+          fluid
+        >
+          <input autoFocus />
+        </Input>
+        <br />
+        <Dropdown
+          id="unit"
+          onChange={props.handleFormInput}
+          placeholder="which unit do you need help with?"
+          fluid
+          search
+          selection
+          options={units}
+        />
+        <br />
+        <TextArea
+          rows={2}
+          id="desc"
+          placeholder="briefly describe the issue"
+          onChange={props.handleFormInput}
+        />
+      </Form>
       <br />
       {props.showErrorMessage && (
         <div>
