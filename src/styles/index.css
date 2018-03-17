@@ -9,6 +9,8 @@
     ". tutors ."
     ". main ."
     ". footer .";
+  background-color: #792F91;
+  color: white;
 }
 
 header {
@@ -49,4 +51,12 @@ footer {
 
 div.menu.transition.visible {
   max-height: 500px !important; /* displays full list of unit options on help request modal */
+}
+
+.request-header {
+  background-color: #F07A28 !important;
+}
+
+.request-row {
+  background-color: #FAD846;
 }

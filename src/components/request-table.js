@@ -13,7 +13,7 @@ const RequestTable = props => {
     return msg;
   };
   const renderRow = request => (
-    <Table.Row key={request.id}>
+    <Table.Row key={request.id} className="request-row">
       <Table.Cell>{request.name}</Table.Cell>
       <Table.Cell>{request.unit}</Table.Cell>
       <Table.Cell>{request.desc}</Table.Cell>
@@ -33,11 +33,15 @@ const RequestTable = props => {
       <Table padded="very" className="center aligned">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Unit</Table.HeaderCell>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Time</Table.HeaderCell>
-            <Table.HeaderCell>Remove</Table.HeaderCell>
+            <Table.HeaderCell className="request-header">Name</Table.HeaderCell>
+            <Table.HeaderCell className="request-header">Unit</Table.HeaderCell>
+            <Table.HeaderCell className="request-header">
+              Description
+            </Table.HeaderCell>
+            <Table.HeaderCell className="request-header">Time</Table.HeaderCell>
+            <Table.HeaderCell className="request-header">
+              Remove
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         {requests.length > 0 ? (
