@@ -49,7 +49,7 @@ const RequestTable = props => {
         ) : (
           <Table.Footer fullWidth>
             <Table.Row>
-              <Table.HeaderCell colSpan="5">
+              <Table.HeaderCell colSpan="5" className="request-row">
                 No active help requests
               </Table.HeaderCell>
             </Table.Row>

@@ -1,3 +1,13 @@
+:root {
+  --purple: #792F91;
+  --black: rgba(34,36,38,0.87);
+  --orange: #F07A28;
+  --yellow: #FAD846;
+  --white: #CCE2FF;
+  --red: #D43F4D;
+  --green: #4DB737;
+}
+
 .app {
   text-align: center;
   display: grid;
@@ -9,8 +19,8 @@
     ". tutors ."
     ". main ."
     ". footer .";
-  background-color: #792F91;
-  color: white;
+  background-color: var(--purple);
+  color: var(--white);
 }
 
 header {
@@ -54,9 +64,25 @@ div.menu.transition.visible {
 }
 
 .request-header {
-  background-color: #F07A28 !important;
+  background-color: var(--orange) !important;
+  color: var(--white) !important;
 }
 
 .request-row {
-  background-color: #FAD846;
+  background-color: var(--yellow) !important;
+}
+
+button.ui.red.button {
+  background-color: var(--red) !important;
+  color: var(--black) !important;
+}
+
+button.ui.red.button.cancel {
+  background-color: var(--red) !important;
+  color: white !important;
+}
+
+button.ui.green.button {
+  background-color: var(--green) !important;
+  color: white !important;
 }

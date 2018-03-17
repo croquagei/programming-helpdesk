@@ -154,7 +154,7 @@ class App extends Component {
     } = this.state;
     return (
       <Modal open={showHelpModal} onClose={this.closeHelpModal}>
-        <Modal.Header>Tell us a little more about your problem</Modal.Header>
+        <Modal.Header>Tell us a little more about the issue</Modal.Header>
         <Modal.Content>
           <RequestForm
             request={request}

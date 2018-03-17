@@ -87,7 +87,12 @@ const RequestForm = props => {
         <Icon name="checkmark" />
         Submit
       </Button>
-      <Button color="red" floated="right" onClick={props.closeHelpModal}>
+      <Button
+        color="red"
+        className="cancel"
+        floated="right"
+        onClick={props.closeHelpModal}
+      >
         <Icon name="close" />
         Cancel
       </Button>
