@@ -9,14 +9,8 @@ import {
   Form,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import Listeners from './listeners';
 
 const RequestForm = props => {
-  const handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      props.handleFormSubmit();
-    }
-  };
   const units = [
     {
       value: 'Introduction to Programming',
@@ -97,7 +91,6 @@ const RequestForm = props => {
         Cancel
       </Button>
       <br />
-      <Listeners onKeyPress={handleKeyPress} />
       <br />
     </div>
   );

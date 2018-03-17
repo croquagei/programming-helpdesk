@@ -4,6 +4,7 @@ import RequestTable from '../components/request-table';
 import RequestForm from '../components/request-form';
 import AvailableTutors from './available-tutors';
 import BellSample from '../sounds/bell.wav';
+import Listeners from '../components/listeners';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -20,6 +21,7 @@ class App extends Component {
       requests: [],
       animateButton: true,
       animation: 'jiggle',
+      errorTimeout: null,
     };
     this.Bell = new Audio(BellSample);
     this.handleFormInput = this.handleFormInput.bind(this);
@@ -29,6 +31,7 @@ class App extends Component {
     this.openHelpModal = this.openHelpModal.bind(this);
     this.closeHelpModal = this.closeHelpModal.bind(this);
     this.triggerAnimation = this.triggerAnimation.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +55,18 @@ class App extends Component {
 
   getRequests() {
     ipcRenderer.send('getAllRequests');
+  }
+
+  handleKeyPress(e) {
+    let { showHelpModal } = this.state;
+    if (e.key === 'Enter') {
+      if (showHelpModal) {
+        this.handleFormSubmit();
+      } else {
+        showHelpModal = true;
+        this.setState({ showHelpModal });
+      }
+    }
   }
 
   addRequest(request) {
@@ -110,12 +125,17 @@ class App extends Component {
   }
 
   displayErrorMessage(header, content, duration = 5000) {
+    clearTimeout(this.state.errorTimeout);
+    const errorTimeout = setTimeout(
+      this.clearErrorMessage.bind(this),
+      duration,
+    );
     this.setState({
       showErrorMessage: true,
       errorMessageHeader: header,
       errorMessageContent: content,
+      errorTimeout,
     });
-    setTimeout(this.clearErrorMessage.bind(this), duration);
   }
 
   openHelpModal() {
@@ -202,6 +222,7 @@ class App extends Component {
           </Transition>
         </footer>
         {this.renderModal()}
+        <Listeners onKeyPress={this.handleKeyPress} />
       </div>
     );
   }
