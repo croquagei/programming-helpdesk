@@ -6,6 +6,8 @@
   "private": true,
   "dependencies": {
     "eslint-config-airbnb": "^16.1.0",
+    "leveldown": "^3.0.0",
+    "levelup": "^2.0.2",
     "pouchdb": "^6.4.3",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
@@ -19,19 +21,17 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postinstall": "electron-rebuild",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron .",
-    "dev": "BROWSER=none nf start",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/helpdesk.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager ./ programming-helpdesk --overwrite --asar --out=./release-builds --platform=win32 --arch=x64 --prune=true --version-string.FileDescription=swin --version-string.ProductName=\"Programming Helpdesk\" --version-string.CompanyName=swin",
-    "package-linux": "electron-packager . programming-helpdesk --overwrite --asar=true --platform=linux --arch=x64 --icon=src/images/helpdesk.icns --prune=true --out=release-builds",
-    "package-all": "electron-packager ./ --all --out=release-builds"
+    "dev": "node ./src/electron-wait-react.js",
+    "pkg-win": "pkg ./src/electron-wait-react.js --targets=node8-win-x64 --out-path=release-builds/win"
   },
   "devDependencies": {
     "electron": "^1.8.2",
-    "electron-packager": "^11.0.1",
+    "electron-prebuilt-compile": "1.8.4",
     "electron-rebuild": "^1.7.3",
-    "foreman": "^2.0.0"
+    "pkg": "^4.3.0"
   }
 }

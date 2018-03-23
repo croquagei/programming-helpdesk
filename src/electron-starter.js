@@ -53,6 +53,7 @@ const createWindow = () => {
     });
   mainWindow.loadURL(startUrl);
   // mainWindow.webContents.openDevTools();
+  mainWindow.setMenu(null);
   mainWindow.setFullScreen(true);
   mainWindow.on('closed', () => {
     mainWindow = null;

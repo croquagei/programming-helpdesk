@@ -1,4 +1,6 @@
 const net = require('net');
+const exec = require('child_process').exec; // eslint-disable-line
+exec('npm start');
 
 const port = process.env.PORT ? process.env.PORT - 100 : 3000;
 
@@ -16,7 +18,6 @@ const tryConnection = () =>
       client.end();
       if (!startedElectron) {
         startedElectron = true;
-        const exec = require('child_process').exec; // eslint-disable-line
         exec('npm run electron');
       }
     },
