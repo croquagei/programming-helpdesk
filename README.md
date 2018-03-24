@@ -13,6 +13,10 @@ Install dependencies
 Run app in development mode
 `yarn dev`
 
+Run processes in separate shells
+`yarn start`
+`node src/electron-starter.js`
+
 Package for deployment
 `yarn pkg`
 
