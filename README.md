@@ -8,13 +8,13 @@ Change into the directory
 `cd programming-helpdesk`
 
 Install dependencies
-`npm i`
+`yarn`
 
 Run app in development mode
-`npm run dev`
+`yarn dev`
 
 Package for deployment
-`npm run pkg`
+`yarn pkg`
 
 * may require admin powershell in Windows
 * may require the following packages in Windows
