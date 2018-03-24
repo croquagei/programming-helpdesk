@@ -52,8 +52,10 @@ const createWindow = () => {
       slashes: true,
     });
   mainWindow.loadURL(startUrl);
-  // mainWindow.webContents.openDevTools();
   mainWindow.setMenu(null);
+  if (process.env.ELECTRON_START_URL) {
+    mainWindow.webContents.openDevTools();
+  }
   mainWindow.setFullScreen(true);
   mainWindow.on('closed', () => {
     mainWindow = null;
