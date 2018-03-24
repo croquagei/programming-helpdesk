@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import ReactMarkdown from 'react-markdown';
 
 const RequestTable = props => {
   const timeSince = time => {
@@ -16,7 +17,7 @@ const RequestTable = props => {
     <Table.Row key={request.id} className="request-row">
       <Table.Cell>{request.name}</Table.Cell>
       <Table.Cell>{request.unit}</Table.Cell>
-      <Table.Cell>{request.desc}</Table.Cell>
+      <Table.Cell><ReactMarkdown source={request.desc} /></Table.Cell>
       <Table.Cell>{timeSince(request.timeRequested)}</Table.Cell>
       <Table.Cell
         className="clickable"
@@ -47,14 +48,14 @@ const RequestTable = props => {
         {requests.length > 0 ? (
           <Table.Body>{requests.map(renderRow)}</Table.Body>
         ) : (
-          <Table.Footer fullWidth>
-            <Table.Row>
-              <Table.HeaderCell colSpan="5" className="request-row">
-                No active help requests
+            <Table.Footer fullWidth>
+              <Table.Row>
+                <Table.HeaderCell colSpan="5" className="request-row">
+                  No active help requests
               </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
-        )}
+              </Table.Row>
+            </Table.Footer>
+          )}
       </Table>
     );
   };

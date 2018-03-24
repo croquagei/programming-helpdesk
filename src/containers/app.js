@@ -59,7 +59,8 @@ class App extends Component {
 
   handleKeyPress(e) {
     let { showHelpModal } = this.state;
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       if (showHelpModal) {
         this.handleFormSubmit();
       } else {
