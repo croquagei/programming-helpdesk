@@ -3,11 +3,9 @@
   "description": "helpdesk application",
   "author": "Jon Meyers",
   "version": "0.1.0",
-  "private": true,
+  "productName": "programming-helpdesk",
   "dependencies": {
     "eslint-config-airbnb": "^16.1.0",
-    "leveldown": "^3.0.0",
-    "levelup": "^2.0.2",
     "pouchdb": "^6.4.3",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
@@ -21,17 +19,26 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postinstall": "electron-rebuild",
+    "install": "prebuild-install || node-gyp rebuild",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron .",
-    "dev": "node ./src/electron-wait-react.js",
-    "pkg-win": "pkg ./src/electron-wait-react.js --targets=node8-win-x64 --out-path=release-builds/win"
+    "pkg": "npm run build && build",
+    "postinstall": "electron-builder install-app-deps",
+    "dev": "node ./src/electron-wait-react.js"
+  },
+  "build": {
+    "appId": "com.electron.programming-helpdesk",
+    "extends": null,
+    "directories": {
+      "buildResources": "public",
+      "output": "release-builds"
+    }
   },
   "devDependencies": {
     "electron": "^1.8.2",
+    "electron-builder": "19.26.3",
     "electron-prebuilt-compile": "1.8.4",
-    "electron-rebuild": "^1.7.3",
-    "pkg": "^4.3.0"
+    "electron-rebuild": "^1.7.3"
   }
 }

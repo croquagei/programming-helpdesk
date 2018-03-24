@@ -7,11 +7,17 @@ Clone repo
 Change into the directory
 `cd programming-helpdesk`
 
-Run locally in Electron
+Install dependencies
+`npm i`
+
+Run app in development mode
 `npm run dev`
 
-Build for deployment
-`npm run build`
+Package for deployment
+`npm run pkg`
 
-Run deployment build in Electron
-`npm run electron`
+* may require admin powershell in Windows
+* may require the following packages in Windows
+`npm install --global --production windows-build-tools`
+
+`npm install --global node-gyp`
