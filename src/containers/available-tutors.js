@@ -7,23 +7,23 @@ class AvailableTutors extends Component {
     this.state = {
       tutors: [
         {
-          unit: 'Introduction to Programming',
+          unit: 'COS10009/COS60006 Introduction to Programming',
           available: false,
         },
         {
-          unit: 'Object-Oriented Programming',
+          unit: 'COS20007 Object-Oriented Programming',
           available: false,
         },
         {
-          unit: 'Creating Web Applications',
+          unit: 'COS10011/COS60004 Creating Web Applications',
           available: false,
         },
         {
-          unit: 'Computer Systems',
+          unit: 'COS10004 Computer Systems',
           available: false,
         },
         {
-          unit: 'Technical Software Development',
+          unit: 'SWE20004 Technical Software Development',
           available: false,
         },
       ],

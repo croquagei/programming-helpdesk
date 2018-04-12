@@ -6,23 +6,23 @@ const RequestForm = props => {
   const units = [
     {
       value: 'Introduction to Programming',
-      text: 'Introduction to Programming',
+      text: ' COS10009/COS60006 - Introduction to Programming',
     },
     {
       value: 'Object-Oriented Programming',
-      text: 'Object-Oriented Programming',
+      text: 'COS20007 - Object-Oriented Programming',
     },
     {
       value: 'Creating Web Applications',
-      text: 'Creating Web Applications',
+      text: 'COS10011/COS6004 - Creating Web Applications',
     },
     {
       value: 'Computer Systems',
-      text: 'Computer Systems',
+      text: 'COS10004 - Computer Systems',
     },
     {
       value: 'Technical Software Development',
-      text: 'Technical Software Development',
+      text: 'SWE20004 - Technical Software Development',
     },
     {
       value: 'Other',
@@ -74,7 +74,7 @@ const RequestForm = props => {
         </div>
         <div className="input-field-short">
           <Button color="green" onClick={props.handleFormSubmit} fluid>
-            Help me!
+            OK
           </Button>
         </div>
       </Form>
