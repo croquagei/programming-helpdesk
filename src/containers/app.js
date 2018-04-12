@@ -48,7 +48,11 @@ class App extends Component {
     ipcRenderer.on('errorResponse', (e, args) => {
       console.log(args); // eslint-disable-line no-console
     });
-    this.triggerAnimation();
+    this.interval = setInterval(this.forceUpdate.bind(this), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   getRequests() {
