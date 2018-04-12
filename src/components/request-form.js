@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Input,
-  Dropdown,
-  Icon,
-  Message,
-  TextArea,
-  Form,
-} from 'semantic-ui-react';
+import { Button, Input, Dropdown, Message, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 const RequestForm = props => {
@@ -38,38 +30,57 @@ const RequestForm = props => {
     },
   ];
   return (
-    <div>
+    <div className="help-form">
+      <hr />
+      <h2 className="help-title">Need Help? Please Queue Here</h2>
       <Form>
-        <Input
-          type="text"
-          id="name"
-          placeholder="what is your name?"
-          onChange={props.handleFormInput}
-          fluid
-        >
-          <input autoFocus />
-        </Input>
-        <br />
-        <Dropdown
-          id="unit"
-          onChange={props.handleFormInput}
-          placeholder="which unit do you need help with?"
-          fluid
-          search
-          selection
-          options={units}
-        />
-        <br />
-        <TextArea
-          rows={2}
-          id="desc"
-          placeholder="briefly describe the issue"
-          onChange={props.handleFormInput}
-        />
+        <div className="input-field">
+          <Input
+            type="text"
+            id="name"
+            placeholder="What is your name?"
+            onChange={props.handleFormInput}
+            value={props.request.name}
+            fluid
+          >
+            <input id="name-input" autoFocus />
+          </Input>
+        </div>
+        <div className="input-field">
+          <Dropdown
+            id="unit"
+            onChange={props.handleFormInput}
+            placeholder="Which unit?"
+            search
+            selection
+            className="input-field"
+            options={units}
+            fluid
+            value={props.request.unit}
+          />
+        </div>
+        <div className="input-field">
+          <Input
+            type="text"
+            id="desc"
+            className="input-field"
+            placeholder="What do you need help with?"
+            onChange={props.handleFormInput}
+            fluid
+            value={props.request.desc}
+          >
+            <input />
+          </Input>
+        </div>
+        <div className="input-field-short">
+          <Button color="green" onClick={props.handleFormSubmit} fluid>
+            Help me!
+          </Button>
+        </div>
       </Form>
-      <br />
       {props.showErrorMessage && (
         <div>
+          <br />
           <Message negative>
             <Message.Header>{props.errorMessageHeader}</Message.Header>
             <p>{props.errorMessageContent}</p>
@@ -77,20 +88,6 @@ const RequestForm = props => {
           <br />
         </div>
       )}
-      <Button color="green" floated="right" onClick={props.handleFormSubmit}>
-        <Icon name="checkmark" />
-        Submit
-      </Button>
-      <Button
-        color="red"
-        className="cancel"
-        floated="right"
-        onClick={props.closeHelpModal}
-      >
-        <Icon name="close" />
-        Cancel
-      </Button>
-      <br />
       <br />
     </div>
   );
@@ -102,7 +99,11 @@ RequestForm.propTypes = {
   showErrorMessage: PropTypes.bool.isRequired,
   errorMessageHeader: PropTypes.string.isRequired,
   errorMessageContent: PropTypes.string.isRequired,
-  closeHelpModal: PropTypes.func.isRequired,
+  request: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    desc: PropTypes.string.isRequired,
+    unit: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default RequestForm;

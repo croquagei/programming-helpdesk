@@ -14,13 +14,15 @@ const RequestTable = props => {
     return msg;
   };
   const renderRow = request => (
-    <Table.Row key={request.id} className="request-row">
+    <Table.Row key={request.id}>
       <Table.Cell>{request.name}</Table.Cell>
       <Table.Cell>{request.unit}</Table.Cell>
-      <Table.Cell><ReactMarkdown source={request.desc} /></Table.Cell>
+      <Table.Cell>
+        <ReactMarkdown source={request.desc} />
+      </Table.Cell>
       <Table.Cell>{timeSince(request.timeRequested)}</Table.Cell>
       <Table.Cell
-        className="clickable"
+        className="clickable request-row-trash"
         onClick={() => props.closeRequest(request.id)} // eslint-disable-line react/prop-types
       >
         <Icon name="trash" />
@@ -34,28 +36,24 @@ const RequestTable = props => {
       <Table padded="very" className="center aligned">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell className="request-header">Name</Table.HeaderCell>
-            <Table.HeaderCell className="request-header">Unit</Table.HeaderCell>
-            <Table.HeaderCell className="request-header">
-              Description
-            </Table.HeaderCell>
-            <Table.HeaderCell className="request-header">Time</Table.HeaderCell>
-            <Table.HeaderCell className="request-header">
-              Remove
-            </Table.HeaderCell>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Unit</Table.HeaderCell>
+            <Table.HeaderCell>Description</Table.HeaderCell>
+            <Table.HeaderCell>Time</Table.HeaderCell>
+            <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
         {requests.length > 0 ? (
           <Table.Body>{requests.map(renderRow)}</Table.Body>
         ) : (
-            <Table.Footer fullWidth>
-              <Table.Row>
-                <Table.HeaderCell colSpan="5" className="request-row">
-                  No active help requests
+          <Table.Footer fullWidth>
+            <Table.Row>
+              <Table.HeaderCell colSpan="5">
+                No active help requests
               </Table.HeaderCell>
-              </Table.Row>
-            </Table.Footer>
-          )}
+            </Table.Row>
+          </Table.Footer>
+        )}
       </Table>
     );
   };

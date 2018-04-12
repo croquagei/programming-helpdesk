@@ -41,7 +41,7 @@ class AvailableTutors extends Component {
     return (
       <Button
         key={i}
-        color={tutor.available ? 'green' : 'red'}
+        color={tutor.available ? 'green' : 'grey'}
         onClick={this.toggleAvailability.bind(this, i)} // eslint-disable-line react/jsx-no-bind
       >
         {tutor.unit}
@@ -52,8 +52,10 @@ class AvailableTutors extends Component {
   render() {
     const { tutors } = this.state;
     return (
-      <div>
-        <h2>Tutors currently in the room</h2>
+      <div className="available-tutors">
+        <h2>
+          Currently Available Units <small>(Click to Toggle)</small>
+        </h2>
         <Button.Group widths={tutors.length}>
           {tutors.map((tutor, i) => this.renderButton(tutor, i))}
         </Button.Group>

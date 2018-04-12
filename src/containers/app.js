@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal, Transition } from 'semantic-ui-react';
 import RequestTable from '../components/request-table';
+import Header from '../components/header';
 import RequestForm from '../components/request-form';
 import AvailableTutors from './available-tutors';
 import BellSample from '../sounds/bell.wav';
@@ -16,11 +16,12 @@ class App extends Component {
       showErrorMessage: false,
       errorMessageHeader: '',
       errorMessageContent: '',
-      showHelpModal: false,
-      request: {},
+      request: {
+        name: '',
+        desc: '',
+        unit: '',
+      },
       requests: [],
-      animateButton: true,
-      animation: 'jiggle',
       errorTimeout: null,
     };
     this.Bell = new Audio(BellSample);
@@ -28,9 +29,6 @@ class App extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.getRequests = this.getRequests.bind(this);
     this.closeRequest = this.closeRequest.bind(this);
-    this.openHelpModal = this.openHelpModal.bind(this);
-    this.closeHelpModal = this.closeHelpModal.bind(this);
-    this.triggerAnimation = this.triggerAnimation.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
@@ -58,15 +56,9 @@ class App extends Component {
   }
 
   handleKeyPress(e) {
-    let { showHelpModal } = this.state;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (showHelpModal) {
-        this.handleFormSubmit();
-      } else {
-        showHelpModal = true;
-        this.setState({ showHelpModal });
-      }
+      this.handleFormSubmit();
     }
   }
 
@@ -93,8 +85,9 @@ class App extends Component {
       request.desc
     ) {
       ipcRenderer.send('addNewRequest', JSON.stringify(request));
-      this.closeHelpModal();
       this.Bell.play();
+      this.setState({ request: { name: '', desc: '', unit: '' } });
+      document.getElementById('name-input').focus();
     } else {
       this.displayErrorMessage(
         'Cannot submit help request',
@@ -139,90 +132,29 @@ class App extends Component {
     });
   }
 
-  openHelpModal() {
-    this.clearRequestForm();
-    this.setState({ showHelpModal: true });
-  }
-
-  closeHelpModal() {
-    this.setState({
-      showHelpModal: false,
-      request: {},
-      showErrorMessage: false,
-    });
-  }
-
-  triggerAnimation() {
-    const { showHelpModal } = this.state;
-    if (!showHelpModal) {
-      const { animateButton } = this.state;
-      const animations = ['jiggle', 'shake', 'pulse', 'tada', 'bounce'];
-      const randomNumber = Math.floor(Math.random() * animations.length);
-      const animation = animations[randomNumber];
-      this.setState({ animateButton: !animateButton, animation });
-    }
-    setTimeout(this.triggerAnimation, 10000);
-  }
-
-  renderModal() {
+  render() {
     const {
-      showHelpModal,
+      requests,
+      request,
       showErrorMessage,
       errorMessageHeader,
       errorMessageContent,
-      displayErrorMessage,
-      request,
     } = this.state;
     return (
-      <Modal open={showHelpModal} onClose={this.closeHelpModal}>
-        <Modal.Header>Tell us a little more about the issue</Modal.Header>
-        <Modal.Content>
-          <RequestForm
-            request={request}
-            handleFormInput={this.handleFormInput}
-            handleFormSubmit={this.handleFormSubmit}
-            closeHelpModal={this.closeHelpModal}
-            showErrorMessage={showErrorMessage}
-            errorMessageHeader={errorMessageHeader}
-            errorMessageContent={errorMessageContent}
-            displayErrorMessage={displayErrorMessage}
-          />
-        </Modal.Content>
-      </Modal>
-    );
-  }
-
-  render() {
-    const { requests, animateButton, animation } = this.state;
-    return (
       <div className="app">
-        <header>
-          <h1>Welcome to the Programming Helpdesk</h1>
-        </header>
-        <div className="available-tutors">
-          <AvailableTutors />
-        </div>
+        <Header />
+        <RequestForm
+          handleFormInput={this.handleFormInput}
+          handleFormSubmit={this.handleFormSubmit}
+          request={request}
+          showErrorMessage={showErrorMessage}
+          errorMessageHeader={errorMessageHeader}
+          errorMessageContent={errorMessageContent}
+        />
+        <AvailableTutors />
         <main>
           <RequestTable requests={requests} closeRequest={this.closeRequest} />
         </main>
-        <footer>
-          <Transition
-            animation={animation}
-            duration={700}
-            visible={animateButton}
-          >
-            <Button
-              color="green"
-              className="help-btn"
-              size="massive"
-              onClick={this.openHelpModal}
-              fluid
-            >
-              Ask for help
-            </Button>
-          </Transition>
-        </footer>
-        {this.renderModal()}
         <Listeners onKeyPress={this.handleKeyPress} />
       </div>
     );

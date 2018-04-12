@@ -9,23 +9,24 @@
 }
 
 .app {
-  text-align: center;
   display: grid;
   height: 100vh;
   grid-template-columns: 100px 1fr 100px;
-  grid-template-rows: 80px 120px 1fr 80px;
+  grid-template-rows: auto auto auto 1fr;
+  grid-row-gap: 10px;
   grid-template-areas:
-    "header header header"
+    ". header ."
+    ". form ."
     ". tutors ."
     ". main ."
-    ". footer .";
-  background-color: var(--purple);
-  color: white;
 }
 
 header {
   grid-area: header;
-  align-self: center;
+}
+
+.help-form {
+  grid-area: form;
 }
 
 .available-tutors {
@@ -46,35 +47,8 @@ footer {
   cursor: pointer;
 }
 
-.help-btn {
-  white-space: pre;
-}
-
-
-.help-btn:before {
-  content: '\1F64B       ';
-}
-
-.help-btn:after {
-  content: '       \1F64B';
-}
-
 div.menu.transition.visible {
   max-height: 500px !important; /* displays full list of unit options on help request modal */
-}
-
-.request-header {
-  background-color: var(--orange) !important;
-  color: var(--white) !important;
-}
-
-.request-row {
-  background-color: var(--yellow) !important;
-}
-
-button.ui.red.button {
-  background-color: var(--red) !important;
-  color: var(--black) !important;
 }
 
 button.ui.red.button.cancel {
@@ -85,4 +59,42 @@ button.ui.red.button.cancel {
 button.ui.green.button {
   background-color: var(--green) !important;
   color: white !important;
+}
+
+.header-panel {
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.currentTime {
+  align-self: end;
+}
+
+hr {
+  border-top: solid 2px black;
+}
+
+.help-title {
+  color: red;
+  font-weight: normal;
+  margin: 0.5em 0;
+}
+
+.input-field {
+  flex: 2;
+}
+
+.input-field-short {
+  flex: 1;
+}
+
+form {
+  display: flex;
+}
+
+.request-row-trash {
+  text-align: center !important;
+  background-color: var(--red);
+  color: white;
 }
