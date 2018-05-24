@@ -33,7 +33,8 @@
     "extends": null,
     "directories": {
       "buildResources": "public",
-      "output": "release-builds"
+      "output": "release-builds",
+      "asar": false
     }
   },
   "devDependencies": {
