@@ -1,0 +1,15 @@
+[
+  { 
+    "unit": "COS10009/COS60006 Introduction to Programming",
+    "value": "Introduction to Programming"
+  },
+  { "unit": "COS10011/COS60004 Creating Web Applications",
+    "value": "Creating Web Applications"
+  },
+  { "unit": "COS10004 Computer Systems",
+    "value": "Computer Systems"
+  },
+  { "unit": "SWE20004 Technical Software Development",
+    "value": "Technical Software Development"
+  }
+]

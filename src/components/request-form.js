@@ -3,32 +3,11 @@ import { Button, Input, Dropdown, Message, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 const RequestForm = props => {
-  const units = [
-    {
-      value: 'Introduction to Programming',
-      text: ' COS10009/COS60006 - Introduction to Programming',
-    },
-    {
-      value: 'Object-Oriented Programming',
-      text: 'COS20007 - Object-Oriented Programming',
-    },
-    {
-      value: 'Creating Web Applications',
-      text: 'COS10011/COS6004 - Creating Web Applications',
-    },
-    {
-      value: 'Computer Systems',
-      text: 'COS10004 - Computer Systems',
-    },
-    {
-      value: 'Technical Software Development',
-      text: 'SWE20004 - Technical Software Development',
-    },
-    {
-      value: 'Other',
-      text: 'Other',
-    },
-  ];
+  const { units } = props;
+  // eslint-disable-next-line
+  const formattedUnits = units.map(unit => {
+    return { text: unit.unit, ...unit };
+  });
   return (
     <div className="help-form">
       <hr />
@@ -54,7 +33,7 @@ const RequestForm = props => {
             search
             selection
             className="input-field"
-            options={units}
+            options={formattedUnits}
             fluid
             value={props.request.unit}
           />
@@ -104,6 +83,7 @@ RequestForm.propTypes = {
     desc: PropTypes.string.isRequired,
     unit: PropTypes.string.isRequired,
   }).isRequired,
+  units: PropTypes.array.isRequired, // eslint-disable-line
 };
 
 export default RequestForm;

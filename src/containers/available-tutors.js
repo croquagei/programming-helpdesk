@@ -5,36 +5,33 @@ class AvailableTutors extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tutors: [
-        {
-          unit: 'COS10009/COS60006 Introduction to Programming',
-          available: false,
-        },
-        {
-          unit: 'COS20007 Object-Oriented Programming',
-          available: false,
-        },
-        {
-          unit: 'COS10011/COS60004 Creating Web Applications',
-          available: false,
-        },
-        {
-          unit: 'COS10004 Computer Systems',
-          available: false,
-        },
-        {
-          unit: 'SWE20004 Technical Software Development',
-          available: false,
-        },
-      ],
+      tutors: [],
+      loading: true,
     };
     this.toggleAvailability = this.toggleAvailability.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchTutors();
   }
 
   toggleAvailability(i) {
     const { tutors } = this.state;
     tutors[i].available = !tutors[i].available;
     this.setState({ tutors });
+  }
+
+  fetchTutors() {
+    fetch('./units.json')
+      .then(response => response.json())
+      .then(response => {
+        // eslint-disable-next-line
+        const tutors = response.map(tutor => {
+          return { ...tutor, available: false };
+        });
+        this.setState({ tutors, loading: false });
+      })
+      .catch(error => console.log(error)); // eslint-disable-line no-console
   }
 
   renderButton(tutor, i) {
@@ -50,8 +47,10 @@ class AvailableTutors extends Component {
   }
 
   render() {
-    const { tutors } = this.state;
-    return (
+    const { tutors, loading } = this.state;
+    return loading ? (
+      <p>Loading tutors</p>
+    ) : (
       <div className="available-tutors">
         <h2>
           Currently Available Units <small>(Click to Toggle)</small>

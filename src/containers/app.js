@@ -23,6 +23,7 @@ class App extends Component {
       },
       requests: [],
       errorTimeout: null,
+      units: [],
     };
     this.Bell = new Audio(BellSample);
     this.handleFormInput = this.handleFormInput.bind(this);
@@ -33,6 +34,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchUnits();
     ipcRenderer.on('addNewRequestResponse', (e, args) => {
       const json = JSON.parse(args);
       console.log(json); // eslint-disable-line no-console
@@ -57,6 +59,15 @@ class App extends Component {
 
   getRequests() {
     ipcRenderer.send('getAllRequests');
+  }
+
+  fetchUnits() {
+    fetch('./units.json')
+      .then(response => response.json())
+      .then(units => {
+        this.setState({ units });
+      })
+      .catch(error => console.log(error)); // eslint-disable-line no-console
   }
 
   handleKeyPress(e) {
@@ -143,6 +154,7 @@ class App extends Component {
       showErrorMessage,
       errorMessageHeader,
       errorMessageContent,
+      units,
     } = this.state;
     return (
       <div className="app">
@@ -154,6 +166,7 @@ class App extends Component {
           showErrorMessage={showErrorMessage}
           errorMessageHeader={errorMessageHeader}
           errorMessageContent={errorMessageContent}
+          units={units}
         />
         <AvailableTutors />
         <main>
